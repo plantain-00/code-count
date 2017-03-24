@@ -1,0 +1,29 @@
+{
+  "name": "code-count",
+  "version": "1.0.0",
+  "description": "A CLI tool to count code lines and characters.",
+  "main": "index.js",
+  "scripts": {
+    "build": "tsc -p src",
+    "lint": "tslint \"src/*.ts\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/plantain-00/code-count.git"
+  },
+  "author": "York Yao",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/plantain-00/code-count/issues"
+  },
+  "homepage": "https://github.com/plantain-00/code-count#readme",
+  "devDependencies": {
+    "@types/minimist": "1.2.0",
+    "tslint": "4.5.1",
+    "typescript": "2.2.1"
+  },
+  "dependencies": {
+    "@types/node": "7.0.10",
+    "minimist": "1.2.0"
+  }
+}
