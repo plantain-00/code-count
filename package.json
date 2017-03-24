@@ -25,5 +25,8 @@
   "dependencies": {
     "@types/node": "7.0.10",
     "minimist": "1.2.0"
+  },
+  "bin": {
+    "code-count": "./bin/code-count"
   }
 }
