@@ -19,7 +19,7 @@ function read(path: string) {
                         reject(readFileError);
                         return;
                     }
-                    let line = 0;
+                    let line = 1;
                     for (const c of data) {
                         if (c === "\n") {
                             line++;
