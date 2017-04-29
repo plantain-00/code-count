@@ -4,8 +4,9 @@
   "description": "A CLI tool to count code lines and characters.",
   "main": "index.js",
   "scripts": {
-    "build": "tsc -p src",
-    "lint": "tslint \"src/*.ts\""
+    "build": "npm run clean && tsc -p src",
+    "lint": "tslint \"src/*.ts\"",
+    "clean": "rimraf dist"
   },
   "repository": {
     "type": "git",
@@ -20,8 +21,9 @@
   "devDependencies": {
     "@types/minimist": "1.2.0",
     "@types/node": "7.0.12",
+    "rimraf": "2.6.1",
     "tslint": "5.0.0",
-    "typescript": "2.2.2"
+    "typescript": "2.3.2"
   },
   "dependencies": {
     "minimist": "1.2.0"
