@@ -2,11 +2,14 @@
     "compilerOptions": {
         "target": "es6",
         "module": "commonjs",
+
         "outDir": "../dist",
         "declaration": false,
+
         "strict": true,
         "noUnusedLocals": true,
         "noImplicitReturns": true,
+
         "skipLibCheck": true,
         "importHelpers": true,
         "jsx": "react",
