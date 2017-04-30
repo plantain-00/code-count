@@ -20,9 +20,9 @@
   "homepage": "https://github.com/plantain-00/code-count#readme",
   "devDependencies": {
     "@types/minimist": "1.2.0",
-    "@types/node": "7.0.12",
+    "@types/node": "7.0.14",
     "rimraf": "2.6.1",
-    "tslint": "5.0.0",
+    "tslint": "5.1.0",
     "typescript": "2.3.2"
   },
   "dependencies": {
