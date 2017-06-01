@@ -1,10 +1,10 @@
 import * as libs from "./libs";
 
 const argv = libs.minimist(process.argv.slice(2), { "--": true });
-const paths = argv["_"];
-const excludedDirectories = ((argv["e"] || argv["exclude"]) as string).split(",");
-const includedFileExtensionNames = ((argv["i"] || argv["include"]) as string).split(",");
-const debug: boolean = argv["debug"];
+const paths = argv._;
+const excludedDirectories = ((argv.e || argv.exclude) as string).split(",");
+const includedFileExtensionNames = ((argv.i || argv.include) as string).split(",");
+const debug: boolean = argv.debug;
 
 function read(path: string) {
     return new Promise<{ line: number, char: number }>((resolve, reject) => {
@@ -26,6 +26,7 @@ function read(path: string) {
                         }
                     }
                     if (debug) {
+                        // tslint:disable-next-line:no-console
                         console.log({
                             path,
                             line,
@@ -52,5 +53,6 @@ function read(path: string) {
 }
 
 Promise.all(paths.map(str => read(str))).then(result => {
+    // tslint:disable-next-line:no-console
     console.log(result.reduce((p, c) => ({ line: p.line + c.line, char: p.char + c.char }), { line: 0, char: 0 }));
 });
