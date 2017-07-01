@@ -7,3 +7,5 @@ webpack.config.js
 src
 rev-static.config.js
 spec
+**/*.ts
+!**/*.d.ts
