@@ -6,7 +6,8 @@
   "scripts": {
     "build": "npm run clean && tsc -p src",
     "lint": "tslint \"src/*.ts\"",
-    "clean": "rimraf dist"
+    "clean": "rimraf dist",
+    "test": "tsc -p spec && jasmine"
   },
   "repository": {
     "type": "git",
@@ -19,8 +20,10 @@
   },
   "homepage": "https://github.com/plantain-00/code-count#readme",
   "devDependencies": {
+    "@types/jasmine": "2.5.53",
     "@types/minimist": "1.2.0",
     "@types/node": "8.0.7",
+    "jasmine": "2.6.0",
     "rimraf": "2.6.1",
     "tslint": "5.4.3",
     "typescript": "2.4.1"
