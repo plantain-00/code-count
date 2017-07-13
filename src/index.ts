@@ -55,4 +55,8 @@ function read(path: string) {
 Promise.all(paths.map(str => read(str))).then(result => {
     // tslint:disable-next-line:no-console
     console.log(result.reduce((p, c) => ({ line: p.line + c.line, char: p.char + c.char }), { line: 0, char: 0 }));
+}, error => {
+    // tslint:disable-next-line:no-console
+    console.log(error);
+    process.exit(1);
 });
