@@ -4,11 +4,11 @@
   "description": "A CLI tool to count code lines and characters.",
   "main": "index.js",
   "scripts": {
-    "build": "npm run clean && tsc -p src",
-    "lint": "tslint \"src/*.ts\"",
-    "clean": "rimraf dist",
-    "test": "tsc -p spec && jasmine",
-    "release": "clean-release"
+    "build": "clean-scripts build",
+    "lint": "clean-scripts lint",
+    "test": "clean-scripts test",
+    "fix": "clean-scripts fix",
+    "release": "clean-scripts release"
   },
   "repository": {
     "type": "git",
@@ -25,8 +25,10 @@
     "@types/minimist": "1.2.0",
     "@types/node": "8.0.7",
     "clean-release": "1.0.3",
+    "clean-scripts": "1.0.0",
     "jasmine": "2.6.0",
     "rimraf": "2.6.1",
+    "standard": "10.0.2",
     "tslint": "5.4.3",
     "typescript": "2.4.1"
   },
