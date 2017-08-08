@@ -15,5 +15,6 @@ module.exports = {
     ts: `tslint --fix "src/**/*.ts"`,
     js: `standard --fix "**/*.config.js"`
   },
-  release: `clean-release`
+  release: `clean-release`,
+  count: `./bin/code-count . -i .ts -e node_modules,.git --debug`
 }

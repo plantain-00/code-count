@@ -8,7 +8,8 @@
     "lint": "clean-scripts lint",
     "test": "clean-scripts test",
     "fix": "clean-scripts fix",
-    "release": "clean-scripts release"
+    "release": "clean-scripts release",
+    "count": "clean-scripts count"
   },
   "repository": {
     "type": "git",
