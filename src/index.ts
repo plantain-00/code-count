@@ -6,6 +6,11 @@ const excludedDirectories = ((argv.e || argv.exclude) as string).split(",");
 const includedFileExtensionNames = ((argv.i || argv.include) as string).split(",");
 const debug: boolean = argv.debug;
 
+function printInConsole(message: any) {
+    // tslint:disable-next-line:no-console
+    console.log(message);
+}
+
 function read(path: string) {
     return new Promise<{ line: number, char: number }>((resolve, reject) => {
         libs.fs.stat(path, (statError, stats) => {
@@ -26,8 +31,7 @@ function read(path: string) {
                         }
                     }
                     if (debug) {
-                        // tslint:disable-next-line:no-console
-                        console.log({
+                        printInConsole({
                             path,
                             line,
                             char: data.length,
@@ -53,10 +57,8 @@ function read(path: string) {
 }
 
 Promise.all(paths.map(str => read(str))).then(result => {
-    // tslint:disable-next-line:no-console
-    console.log(result.reduce((p, c) => ({ line: p.line + c.line, char: p.char + c.char }), { line: 0, char: 0 }));
+    printInConsole(result.reduce((p, c) => ({ line: p.line + c.line, char: p.char + c.char }), { line: 0, char: 0 }));
 }, error => {
-    // tslint:disable-next-line:no-console
-    console.log(error);
+    printInConsole(error);
     process.exit(1);
 });
