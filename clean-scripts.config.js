@@ -13,6 +13,7 @@ module.exports = {
   test: [
     'tsc -p spec',
     'jasmine',
+    `node dist/index.js . -i .ts -e node_modules,.git > spec/result.txt`,
     () => new Promise((resolve, reject) => {
       childProcess.exec('git status -s', (error, stdout, stderr) => {
         if (error) {
@@ -31,6 +32,5 @@ module.exports = {
     ts: `tslint --fix "src/**/*.ts"`,
     js: `standard --fix "**/*.config.js"`
   },
-  release: `clean-release`,
-  count: `./bin/code-count . -i .ts -e node_modules,.git --debug`
+  release: `clean-release`
 }

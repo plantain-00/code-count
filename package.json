@@ -9,7 +9,7 @@
     "test": "clean-scripts test",
     "fix": "clean-scripts fix",
     "release": "clean-scripts release",
-    "count": "clean-scripts count"
+    "count": "clean-scripts test[2]"
   },
   "repository": {
     "type": "git",
@@ -26,7 +26,7 @@
     "@types/minimist": "1.2.0",
     "@types/node": "8.0.17",
     "clean-release": "1.3.2",
-    "clean-scripts": "1.2.1",
+    "clean-scripts": "1.2.3",
     "jasmine": "2.7.0",
     "no-unused-export": "1.1.0",
     "rimraf": "2.6.1",
