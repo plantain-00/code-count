@@ -20,6 +20,6 @@ A CLI tool to count code lines and characters.
 
 key | description
 --- | ---
--i,--include | file extension name seperated by ',', eg: ".ts,.html"
--e,--exclude | directories seperated by ',', eg: "node_modules,.git"
+-i,--include | file extension name, eg: ".ts,.html", repeatable
+-e,--exclude | directories, eg: "node_modules,.git", repeatable
 --debug | debug mode
