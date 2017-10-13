@@ -3,20 +3,23 @@ const util = require('util')
 
 const execAsync = util.promisify(childProcess.exec)
 
+const tsFiles = `"src/**/*.ts" "spec/**/*.ts"`
+const jsFiles = `"*.config.js"`
+
 module.exports = {
   build: [
     `rimraf dist/`,
-    `tsc -p src`
+    `tsc -p src`,
+    `node dist/index.js . -i .ts -e node_modules,.git > spec/result.txt`
   ],
   lint: {
-    ts: `tslint "src/**/*.ts"`,
-    js: `standard "**/*.config.js"`,
-    export: `no-unused-export "src/**/*.ts" "spec/*.ts"`
+    ts: `tslint ${tsFiles}`,
+    js: `standard ${jsFiles}`,
+    export: `no-unused-export ${tsFiles}`
   },
   test: [
     'tsc -p spec',
     'jasmine',
-    `node dist/index.js . -i .ts -e node_modules,.git > spec/result.txt`,
     async () => {
       const { stdout } = await execAsync('git status -s')
       if (stdout) {
@@ -26,8 +29,8 @@ module.exports = {
     }
   ],
   fix: {
-    ts: `tslint --fix "src/**/*.ts"`,
-    js: `standard --fix "**/*.config.js"`
+    ts: `tslint --fix ${tsFiles}`,
+    js: `standard --fix ${jsFiles}`
   },
   release: `clean-release`
 }
