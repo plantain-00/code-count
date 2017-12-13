@@ -73,6 +73,10 @@ function read(path: string) {
 Promise.all(paths.map(str => read(str))).then(result => {
     console.log(result.reduce((p, c) => ({ line: p.line + c.line, char: p.char + c.char }), { line: 0, char: 0 }));
 }, error => {
-    console.log(error);
+    if (error instanceof Error) {
+        console.log(error.message);
+    } else {
+        console.log(error);
+    }
     process.exit(1);
 });
