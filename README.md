@@ -11,7 +11,7 @@ A CLI tool to count code lines and characters.
 
 ## install
 
-`npm i code-count -g`
+`yarn global add code-count`
 
 ## usage
 
