@@ -26,7 +26,7 @@ if (Array.isArray(include)) {
 const debug: boolean = argv.debug;
 
 function read(path: string) {
-    return new Promise<{ line: number, char: number }>((resolve, reject) => {
+    return new Promise<{ file: number, line: number, char: number }>((resolve, reject) => {
         libs.fs.stat(path, (statError, stats) => {
             if (statError) {
                 reject(statError);
@@ -51,7 +51,7 @@ function read(path: string) {
                             char: data.length,
                         });
                     }
-                    resolve({ line, char: data.length });
+                    resolve({ file: 1, line, char: data.length });
                 });
             } else if (stats.isDirectory() && excludedDirectories.every(d => !path.endsWith(d))) {
                 libs.fs.readdir(path, (readDirError, files) => {
@@ -60,18 +60,18 @@ function read(path: string) {
                         return;
                     }
                     Promise.all(files.map(f => read(libs.path.resolve(path, f)))).then(result => {
-                        resolve(result.reduce((p, c) => ({ line: p.line + c.line, char: p.char + c.char }), { line: 0, char: 0 }));
+                        resolve(result.reduce((p, c) => ({ file: p.file + c.file, line: p.line + c.line, char: p.char + c.char }), { file: 0, line: 0, char: 0 }));
                     });
                 });
             } else {
-                resolve({ line: 0, char: 0 });
+                resolve({ file: 0, line: 0, char: 0 });
             }
         });
     });
 }
 
 Promise.all(paths.map(str => read(str))).then(result => {
-    console.log(result.reduce((p, c) => ({ line: p.line + c.line, char: p.char + c.char }), { line: 0, char: 0 }));
+    console.log(result.reduce((p, c) => ({ file: p.file + c.file, line: p.line + c.line, char: p.char + c.char }), { file: 0, line: 0, char: 0 }));
 }, error => {
     if (error instanceof Error) {
         console.log(error.message);
