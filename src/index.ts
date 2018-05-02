@@ -25,34 +25,15 @@ if (Array.isArray(include)) {
 
 const debug: boolean = argv.debug
 
-function read (path: string) {
-  return new Promise<{ file: number, line: number, char: number }>((resolve, reject) => {
+function read(path: string) {
+  return new Promise<Result>((resolve, reject) => {
     libs.fs.stat(path, (statError, stats) => {
       if (statError) {
         reject(statError)
         return
       }
       if (stats.isFile() && includedFileExtensionNames.indexOf(libs.path.extname(path)) > -1) {
-        libs.fs.readFile(path, 'utf8', (readFileError, data) => {
-          if (readFileError) {
-            reject(readFileError)
-            return
-          }
-          let line = 1
-          for (const c of data) {
-            if (c === '\n') {
-              line++
-            }
-          }
-          if (debug) {
-            console.log({
-              path,
-              line,
-              char: data.length
-            })
-          }
-          resolve({ file: 1, line, char: data.length })
-        })
+        readFile(path).then(result => resolve(result), error => reject(error))
       } else if (stats.isDirectory() && excludedDirectories.every(d => !path.endsWith(d))) {
         libs.fs.readdir(path, (readDirError, files) => {
           if (readDirError) {
@@ -70,6 +51,31 @@ function read (path: string) {
   })
 }
 
+function readFile(path: string) {
+  return new Promise<Result>((resolve, reject) => {
+    libs.fs.readFile(path, 'utf8', (readFileError, data) => {
+      if (readFileError) {
+        reject(readFileError)
+        return
+      }
+      let line = 1
+      for (const c of data) {
+        if (c === '\n') {
+          line++
+        }
+      }
+      if (debug) {
+        console.log({
+          path,
+          line,
+          char: data.length
+        })
+      }
+      resolve({ file: 1, line, char: data.length })
+    })
+  })
+}
+
 Promise.all(paths.map(str => read(str))).then(result => {
   console.log(result.reduce((p, c) => ({ file: p.file + c.file, line: p.line + c.line, char: p.char + c.char }), { file: 0, line: 0, char: 0 }))
 }, error => {
@@ -80,3 +86,9 @@ Promise.all(paths.map(str => read(str))).then(result => {
   }
   process.exit(1)
 })
+
+type Result = {
+  file: number
+  line: number
+  char: number
+}
