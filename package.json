@@ -6,6 +6,7 @@
   "scripts": {
     "build": "clean-scripts build",
     "lint": "clean-scripts lint",
+    "test:run": "clean-release --config clean-run.config.js",
     "test": "clean-scripts test",
     "fix": "clean-scripts fix"
   },
@@ -37,7 +38,8 @@
     "typescript": "2.8.3"
   },
   "dependencies": {
-    "minimist": "1.2.0"
+    "minimist": "1.2.0",
+    "tslib": "1.9.1"
   },
   "bin": {
     "code-count": "./bin/code-count"
