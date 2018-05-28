@@ -42,16 +42,32 @@ function read(path: string, isRoot: boolean) {
             return
           }
           Promise.all(files.map(f => read(libs.path.resolve(path, f), false))).then(result => {
-            resolve(result.reduce((p, c) => ({ file: p.file + c.file, line: p.line + c.line, char: p.char + c.char }), { file: 0, line: 0, char: 0 }))
+            resolve(result.reduce((p, c) => ({
+              file: p.file + c.file,
+              line: p.line + c.line,
+              emptyLine: p.emptyLine + c.emptyLine,
+              char: p.char + c.char
+            }), {
+              file: 0,
+              line: 0,
+              emptyLine: 0,
+              char: 0
+            }))
           })
         })
       } else {
-        resolve({ file: 0, line: 0, char: 0 })
+        resolve({
+          file: 0,
+          line: 0,
+          emptyLine: 0,
+          char: 0
+        })
       }
     })
   })
 }
 
+// tslint:disable-next-line:cognitive-complexity
 function readFile(path: string) {
   return new Promise<Result>((resolve, reject) => {
     libs.fs.readFile(path, 'utf8', (readFileError, data) => {
@@ -59,26 +75,34 @@ function readFile(path: string) {
         reject(readFileError)
         return
       }
-      let line = 1
-      for (const c of data) {
-        if (c === '\n') {
-          line++
-        }
-      }
+      let lines = data.split('\n')
+      const line = lines.length
+      let emptyLine = lines.filter(l => l.trim().length === 0).length
       if (debug) {
         console.log({
           path,
+          emptyLine,
           line,
           char: data.length
         })
       }
-      resolve({ file: 1, line, char: data.length })
+      resolve({ file: 1, line, emptyLine, char: data.length })
     })
   })
 }
 
 Promise.all(paths.map(str => read(str, true))).then(result => {
-  console.log(result.reduce((p, c) => ({ file: p.file + c.file, line: p.line + c.line, char: p.char + c.char }), { file: 0, line: 0, char: 0 }))
+  console.log(result.reduce((p, c) => ({
+    file: p.file + c.file,
+    line: p.line + c.line,
+    emptyLine: p.emptyLine + c.emptyLine,
+    char: p.char + c.char
+  }), {
+    file: 0,
+    line: 0,
+    emptyLine: 0,
+    char: 0
+  }))
 }, error => {
   if (error instanceof Error) {
     console.log(error.message)
@@ -91,5 +115,6 @@ Promise.all(paths.map(str => read(str, true))).then(result => {
 type Result = {
   file: number
   line: number
+  emptyLine: number
   char: number
 }
