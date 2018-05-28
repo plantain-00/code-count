@@ -17,6 +17,8 @@ A CLI tool to count code lines and characters.
 
 `code-count . -i .ts -e node_modules,.git`
 
+or `code-count src/index.ts`
+
 ## options
 
 key | description

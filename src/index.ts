@@ -25,14 +25,15 @@ if (Array.isArray(include)) {
 
 const debug: boolean = argv.debug
 
-function read(path: string) {
+// tslint:disable-next-line:cognitive-complexity
+function read(path: string, isRoot: boolean) {
   return new Promise<Result>((resolve, reject) => {
     libs.fs.stat(path, (statError, stats) => {
       if (statError) {
         reject(statError)
         return
       }
-      if (stats.isFile() && includedFileExtensionNames.indexOf(libs.path.extname(path)) > -1) {
+      if (stats.isFile() && (isRoot || includedFileExtensionNames.includes(libs.path.extname(path)))) {
         readFile(path).then(result => resolve(result), error => reject(error))
       } else if (stats.isDirectory() && excludedDirectories.every(d => !path.endsWith(d))) {
         libs.fs.readdir(path, (readDirError, files) => {
@@ -40,7 +41,7 @@ function read(path: string) {
             reject(readDirError)
             return
           }
-          Promise.all(files.map(f => read(libs.path.resolve(path, f)))).then(result => {
+          Promise.all(files.map(f => read(libs.path.resolve(path, f), false))).then(result => {
             resolve(result.reduce((p, c) => ({ file: p.file + c.file, line: p.line + c.line, char: p.char + c.char }), { file: 0, line: 0, char: 0 }))
           })
         })
@@ -76,7 +77,7 @@ function readFile(path: string) {
   })
 }
 
-Promise.all(paths.map(str => read(str))).then(result => {
+Promise.all(paths.map(str => read(str, true))).then(result => {
   console.log(result.reduce((p, c) => ({ file: p.file + c.file, line: p.line + c.line, char: p.char + c.char }), { file: 0, line: 0, char: 0 }))
 }, error => {
   if (error instanceof Error) {
