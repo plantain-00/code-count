@@ -25,70 +25,48 @@ if (Array.isArray(include)) {
 
 const debug: boolean = argv.debug
 
-// tslint:disable-next-line:cognitive-complexity
-function read(path: string, isRoot: boolean) {
-  return new Promise<Result>((resolve, reject) => {
-    libs.fs.stat(path, (statError, stats) => {
-      if (statError) {
-        reject(statError)
-        return
-      }
-      if (stats.isFile() && (isRoot || includedFileExtensionNames.includes(libs.path.extname(path)))) {
-        readFile(path).then(result => resolve(result), error => reject(error))
-      } else if (stats.isDirectory() && excludedDirectories.every(d => !path.endsWith(d))) {
-        libs.fs.readdir(path, (readDirError, files) => {
-          if (readDirError) {
-            reject(readDirError)
-            return
-          }
-          Promise.all(files.map(f => read(libs.path.resolve(path, f), false))).then(result => {
-            resolve(result.reduce((p, c) => ({
-              file: p.file + c.file,
-              line: p.line + c.line,
-              emptyLine: p.emptyLine + c.emptyLine,
-              char: p.char + c.char
-            }), {
-              file: 0,
-              line: 0,
-              emptyLine: 0,
-              char: 0
-            }))
-          })
-        })
-      } else {
-        resolve({
-          file: 0,
-          line: 0,
-          emptyLine: 0,
-          char: 0
-        })
-      }
-    })
-  })
+async function read(path: string, isRoot: boolean): Promise<Result> {
+  const stats = await libs.statAsync(path)
+  if (stats.isFile() && (isRoot || includedFileExtensionNames.includes(libs.path.extname(path)))) {
+    return readFile(path)
+  }
+  if (stats.isDirectory() && excludedDirectories.every(d => !path.endsWith(d))) {
+    const files = await libs.readdirAsync(path)
+    const result = await Promise.all(files.map(f => read(libs.path.resolve(path, f), false)))
+    return result.reduce((p, c) => ({
+      file: p.file + c.file,
+      line: p.line + c.line,
+      emptyLine: p.emptyLine + c.emptyLine,
+      char: p.char + c.char
+    }), {
+        file: 0,
+        line: 0,
+        emptyLine: 0,
+        char: 0
+      })
+  }
+  return {
+    file: 0,
+    line: 0,
+    emptyLine: 0,
+    char: 0
+  }
 }
 
-// tslint:disable-next-line:cognitive-complexity
-function readFile(path: string) {
-  return new Promise<Result>((resolve, reject) => {
-    libs.fs.readFile(path, 'utf8', (readFileError, data) => {
-      if (readFileError) {
-        reject(readFileError)
-        return
-      }
-      let lines = data.split('\n')
-      const line = lines.length
-      let emptyLine = lines.filter(l => l.trim().length === 0).length
-      if (debug) {
-        console.log({
-          path,
-          emptyLine,
-          line,
-          char: data.length
-        })
-      }
-      resolve({ file: 1, line, emptyLine, char: data.length })
+async function readFile(path: string) {
+  const data = await libs.readFileAsync(path, 'utf8')
+  const lines = data.split('\n')
+  const line = lines.length
+  const emptyLine = lines.filter(l => l.trim().length === 0).length
+  if (debug) {
+    console.log({
+      path,
+      emptyLine,
+      line,
+      char: data.length
     })
-  })
+  }
+  return { file: 1, line, emptyLine, char: data.length }
 }
 
 Promise.all(paths.map(str => read(str, true))).then(result => {
@@ -98,11 +76,11 @@ Promise.all(paths.map(str => read(str, true))).then(result => {
     emptyLine: p.emptyLine + c.emptyLine,
     char: p.char + c.char
   }), {
-    file: 0,
-    line: 0,
-    emptyLine: 0,
-    char: 0
-  }))
+      file: 0,
+      line: 0,
+      emptyLine: 0,
+      char: 0
+    }))
 }, error => {
   if (error instanceof Error) {
     console.log(error.message)
@@ -112,7 +90,7 @@ Promise.all(paths.map(str => read(str, true))).then(result => {
   process.exit(1)
 })
 
-type Result = {
+interface Result {
   file: number
   line: number
   emptyLine: number
