@@ -27,7 +27,7 @@
     "@commitlint/config-conventional": "8.1.0",
     "@types/jasmine": "3.3.16",
     "@types/minimist": "1.2.0",
-    "@types/node": "12.6.8",
+    "@types/node": "12.6.9",
     "@typescript-eslint/eslint-plugin": "1.13.0",
     "@typescript-eslint/parser": "1.13.0",
     "clean-release": "2.7.0",
@@ -39,7 +39,7 @@
     "markdownlint-cli": "0.17.0",
     "no-unused-export": "1.9.0",
     "rimraf": "2.6.3",
-    "type-coverage": "2.2.0-alpha.2",
+    "type-coverage": "2.2.0",
     "typescript": "3.5.3"
   },
   "dependencies": {
