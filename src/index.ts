@@ -27,10 +27,10 @@ const debug: boolean = argv.debug
 
 async function read(path: string, isRoot: boolean): Promise<Result> {
   const stats = await libs.statAsync(path)
-  if (stats.isFile() && (isRoot || includedFileExtensionNames.includes(libs.path.extname(path)))) {
+  if (stats && stats.isFile() && (isRoot || includedFileExtensionNames.includes(libs.path.extname(path)))) {
     return readFile(path)
   }
-  if (stats.isDirectory() && excludedDirectories.every(d => !path.endsWith(d))) {
+  if (stats && stats.isDirectory() && excludedDirectories.every(d => !path.endsWith(d))) {
     const files = await libs.readdirAsync(path)
     const result = await Promise.all(files.map(f => read(libs.path.resolve(path, f), false)))
     return result.reduce((p, c) => ({
