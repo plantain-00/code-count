@@ -27,3 +27,14 @@ key | description
 -i,--include | file extension name, eg: ".ts,.html", repeatable
 -e,--exclude | directories, eg: "node_modules,.git", repeatable
 --debug | debug mode
+
+## api
+
+```ts
+import { count } from 'code-count
+
+count('.', {
+  includedFileExtensionNames: [ '.ts' ],
+  excludedDirectories: [ 'node_modules', '.git' ]
+})
+```
