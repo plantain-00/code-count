@@ -31,7 +31,7 @@ key | description
 ## api
 
 ```ts
-import { count } from 'code-count
+import { count } from 'code-count'
 
 count('.', {
   includedFileExtensionNames: [ '.ts' ],
