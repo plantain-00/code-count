@@ -1,6 +1,6 @@
 {
   "name": "code-count",
-  "version": "1.4.1",
+  "version": "1.5.0",
   "description": "A CLI tool to count code lines and characters.",
   "main": "dist/core.js",
   "types": "dist/core.d.ts",
