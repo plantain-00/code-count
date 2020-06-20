@@ -27,6 +27,8 @@ key | description
 -i,--include | file extension name, eg: ".ts,.html", repeatable
 -e,--exclude | directories, eg: "node_modules,.git", repeatable
 --debug | debug mode
+-h,--help | Print this message.
+-v,--version | Print the version
 
 ## api
 

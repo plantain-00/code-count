@@ -1,8 +1,39 @@
 import * as libs from './libs'
 import { count } from './core'
+import * as packageJson from '../package.json'
 
 const argv = libs.minimist(process.argv.slice(2), { '--': true })
 const paths = argv._
+
+function showToolVersion() {
+  console.log(`Version: ${packageJson.version}`)
+}
+
+function showHelp() {
+  console.log(`Version ${packageJson.version}
+Syntax:   code-count [options] [file...]
+
+Examples: code-count src/index.ts
+          code-count . -i .ts -e node_modules,.git
+
+Options:
+ -h, --help                                         Print this message.
+ -v, --version                                      Print the version
+ -i, --include                                      File extension name, eg: ".ts,.html", repeatable
+ -e, --exclude                                      Directories, eg: "node_modules,.git", repeatable
+ --debug                                            Debug mode
+`)
+}
+
+if (argv.v || argv.version) {
+  showToolVersion()
+  process.exit(0)
+}
+
+if (argv.h || argv.help) {
+  showHelp()
+  process.exit(0)
+}
 
 const exclude: string | string[] = argv.e || argv.exclude
 let excludedDirectories: string[] = []
