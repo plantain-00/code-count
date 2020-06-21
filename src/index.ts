@@ -2,7 +2,18 @@ import * as libs from './libs'
 import { count } from './core'
 import * as packageJson from '../package.json'
 
-const argv = libs.minimist(process.argv.slice(2), { '--': true })
+const argv = libs.minimist(process.argv.slice(2), { '--': true }) as unknown as {
+  _: string[]
+  v?: unknown
+  version?: unknown
+  h?: unknown
+  help?: unknown
+  i: string | string[]
+  include: string | string[]
+  e: string | string[]
+  exclude: string | string[]
+  debug?: boolean
+}
 const paths = argv._
 
 function showToolVersion() {
@@ -55,7 +66,7 @@ if (Array.isArray(include)) {
   includedFileExtensionNames = includedFileExtensionNames.concat(include.split(','))
 }
 
-const debug: boolean = argv.debug
+const debug = argv.debug
 
 Promise.all(paths.map(str => count(str, {
   debug,

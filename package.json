@@ -20,7 +20,7 @@
     "url": "https://github.com/plantain-00/code-count/issues"
   },
   "typeCoverage": {
-    "atLeast": 96.16
+    "atLeast": 98.46
   },
   "homepage": "https://github.com/plantain-00/code-count#readme",
   "devDependencies": {
@@ -39,7 +39,7 @@
     "no-unused-export": "1.10.3",
     "rimraf": "3.0.2",
     "ts-node": "8.10.2",
-    "type-coverage": "2.7.2",
+    "type-coverage": "2.8.0",
     "typescript": "3.9.5"
   },
   "dependencies": {
