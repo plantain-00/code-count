@@ -24,8 +24,6 @@
   },
   "homepage": "https://github.com/plantain-00/code-count#readme",
   "devDependencies": {
-    "@commitlint/cli": "9.0.1",
-    "@commitlint/config-conventional": "9.0.1",
     "@types/minimist": "1.2.0",
     "@types/node": "14.0.14",
     "@typescript-eslint/eslint-plugin": "3.4.0",
