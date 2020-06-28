@@ -20,7 +20,7 @@
     "url": "https://github.com/plantain-00/code-count/issues"
   },
   "typeCoverage": {
-    "atLeast": 98.46
+    "atLeast": 99.69
   },
   "homepage": "https://github.com/plantain-00/code-count#readme",
   "devDependencies": {

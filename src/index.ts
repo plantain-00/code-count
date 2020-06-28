@@ -84,7 +84,7 @@ Promise.all(paths.map(str => count(str, {
       emptyLine: 0,
       char: 0
     }))
-}, error => {
+}, (error: Error) => {
   if (error instanceof Error) {
     console.log(error.message)
   } else {
