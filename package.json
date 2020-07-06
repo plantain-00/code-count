@@ -42,8 +42,8 @@
     "typescript": "3.9.6"
   },
   "dependencies": {
-    "minimist": "1.2.5",
-    "tslib": "2.0.0"
+    "minimist": "1",
+    "tslib": "1 || 2"
   },
   "bin": {
     "code-count": "./bin/code-count"
