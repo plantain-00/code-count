@@ -48,5 +48,8 @@
   },
   "bin": {
     "code-count": "./bin/code-count"
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/"
   }
 }
