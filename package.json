@@ -26,9 +26,9 @@
   "homepage": "https://github.com/plantain-00/code-count#readme",
   "devDependencies": {
     "@types/minimist": "1.2.2",
-    "@types/node": "16.9.1",
-    "@typescript-eslint/eslint-plugin": "4.31.0",
-    "@typescript-eslint/parser": "4.31.0",
+    "@types/node": "16.9.6",
+    "@typescript-eslint/eslint-plugin": "4.31.2",
+    "@typescript-eslint/parser": "4.31.2",
     "clean-release": "2.15.2",
     "clean-scripts": "1.20.1",
     "eslint": "7.32.0",
